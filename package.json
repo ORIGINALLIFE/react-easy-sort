@@ -102,5 +102,19 @@
   },
   "jest": {
     "preset": "ts-jest"
+  },
+  "main": "./dist/index.js",
+  "umd:main": "./dist/umd/react-easy-sort.js",
+  "unpkg": "./dist/umd/react-easy-sort.js",
+  "jsdelivr": "./dist/umd/react-easy-sort.js",
+  "module": "./dist/index.module.js",
+  "jsnext:main": "./dist/index.module.js",
+  "react-native": "./dist/index.module.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.module.js",
+      "require": "./dist/index.js"
+    }
   }
 }
