@@ -1,5 +1,4 @@
 import { __rest, __assign } from 'tslib';
-import arrayMove from 'array-move';
 import React from 'react';
 
 /**
@@ -292,6 +291,22 @@ var useDrag = function useDrag(_a) {
   return isTouchDevice ? {} : {
     onMouseDown: onMouseDown
   };
+};
+
+var arrayMoveMutate = function arrayMoveMutate(array, from, to) {
+  var startIndex = from < 0 ? array.length + from : from;
+
+  if (startIndex >= 0 && startIndex < array.length) {
+    var endIndex = to < 0 ? array.length + to : to;
+    var item = array.splice(from, 1)[0];
+    array.splice(endIndex, 0, item);
+  }
+};
+
+var arrayMove = function arrayMove(array, from, to) {
+  array = array.slice();
+  arrayMoveMutate(array, from, to);
+  return array;
 };
 
 var DEFAULT_CONTAINER_TAG = 'div';

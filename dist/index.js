@@ -3,12 +3,10 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var tslib = require('tslib');
-var arrayMove = require('array-move');
 var React = require('react');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var arrayMove__default = /*#__PURE__*/_interopDefaultLegacy(arrayMove);
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 /**
@@ -303,6 +301,22 @@ var useDrag = function useDrag(_a) {
   };
 };
 
+var arrayMoveMutate = function arrayMoveMutate(array, from, to) {
+  var startIndex = from < 0 ? array.length + from : from;
+
+  if (startIndex >= 0 && startIndex < array.length) {
+    var endIndex = to < 0 ? array.length + to : to;
+    var item = array.splice(from, 1)[0];
+    array.splice(endIndex, 0, item);
+  }
+};
+
+var arrayMove = function arrayMove(array, from, to) {
+  array = array.slice();
+  arrayMoveMutate(array, from, to);
+  return array;
+};
+
 var DEFAULT_CONTAINER_TAG = 'div';
 var SortableListContext = /*#__PURE__*/React__default['default'].createContext(undefined);
 
@@ -485,7 +499,7 @@ var SortableList = function SortableList(_a) {
         if (targetIndex !== undefined) {
           if (sourceIndex !== targetIndex) {
             // sort our internal items array
-            itemsRef.current = arrayMove__default['default'](itemsRef.current, sourceIndex, targetIndex); // let the parent know
+            itemsRef.current = arrayMove(itemsRef.current, sourceIndex, targetIndex); // let the parent know
 
             onSortEnd(sourceIndex, targetIndex);
           }

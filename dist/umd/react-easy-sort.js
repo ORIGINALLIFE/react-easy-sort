@@ -1,12 +1,11 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('tslib'), require('array-move'), require('react')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'tslib', 'array-move', 'react'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ReactEasySort = {}, global.tslib, global.arrayMove, global.React));
-}(this, (function (exports, tslib, arrayMove, React) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('tslib'), require('react')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'tslib', 'react'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ReactEasySort = {}, global.tslib, global.React));
+}(this, (function (exports, tslib, React) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-  var arrayMove__default = /*#__PURE__*/_interopDefaultLegacy(arrayMove);
   var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
   /**
@@ -301,6 +300,22 @@
     };
   };
 
+  var arrayMoveMutate = function arrayMoveMutate(array, from, to) {
+    var startIndex = from < 0 ? array.length + from : from;
+
+    if (startIndex >= 0 && startIndex < array.length) {
+      var endIndex = to < 0 ? array.length + to : to;
+      var item = array.splice(from, 1)[0];
+      array.splice(endIndex, 0, item);
+    }
+  };
+
+  var arrayMove = function arrayMove(array, from, to) {
+    array = array.slice();
+    arrayMoveMutate(array, from, to);
+    return array;
+  };
+
   var DEFAULT_CONTAINER_TAG = 'div';
   var SortableListContext = /*#__PURE__*/React__default['default'].createContext(undefined);
 
@@ -483,7 +498,7 @@
           if (targetIndex !== undefined) {
             if (sourceIndex !== targetIndex) {
               // sort our internal items array
-              itemsRef.current = arrayMove__default['default'](itemsRef.current, sourceIndex, targetIndex); // let the parent know
+              itemsRef.current = arrayMove(itemsRef.current, sourceIndex, targetIndex); // let the parent know
 
               onSortEnd(sourceIndex, targetIndex);
             }
